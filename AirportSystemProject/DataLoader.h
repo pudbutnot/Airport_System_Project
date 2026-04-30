@@ -5,5 +5,10 @@
 #include "Airport.h"
 
 std::vector <Airport> loadAirports(const std::string& filename);
+#include <vector>
+#include <string>
+#include "Airport.h"
+
+std::vector<Airport> loadAirports(const std::string& filename);
 
 #endif
