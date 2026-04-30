@@ -35,6 +35,8 @@ std::vector <Airport> loadAirports(const std::string& filename) {
 
 		airports.push_back(a);
 	}
-	std::cout << "Loaded " << airports.size() << "aiports.\n";
+std::cout << "Loaded: " << airports.size() << " aiports.\n";
+	return airports;
+std::cout << "Loaded " << airports.size() << "aiports.\n";
 		return airports;
 }
