@@ -7,12 +7,16 @@
 #include <vector>
 #include <string>
 #include "Airport.h"
+#include "DataLoader.h"
 
 using namespace std;
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    std::vector <Airport> airports = loadAirports("airports.csv");
+
+    std::cout << "Program started successfully.\n";
+    return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
