@@ -5,14 +5,12 @@
 #include <string>
 #include "Airport.h"
 #include "DataLoader.h"
-#include "SearchManager.h"
 
 using namespace std;
 
 int main()
 {
     std::vector <Airport> airports = loadAirports("airports.csv");
-
     std::string code;
     std::cout << "Enter country code to search: ";
     std::cin >> code;
@@ -25,3 +23,8 @@ int main()
     }
     return 0;
 }
+
+    std::cout << "Program started successfully.\n";
+    return 0;
+}
+
