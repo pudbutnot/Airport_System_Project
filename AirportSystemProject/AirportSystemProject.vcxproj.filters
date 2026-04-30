@@ -26,13 +26,20 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+
     <ClInclude Include="DataLoader.h">
+
+    <ClInclude Include="SearchManager.h">
+
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Airport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+
     <ClInclude Include="SearchManager.h">
+    <ClInclude Include="DataLoader.h">
+
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

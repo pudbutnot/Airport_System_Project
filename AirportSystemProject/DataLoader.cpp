@@ -25,9 +25,21 @@ std::vector<Airport> loadAirports(const std::string& filename) {
         std::getline(ss, a.type, ',');
         std::getline(ss, a.name, ',');
 
-        
+
         std::getline(ss, temp, ',');
-        a.elevation_ft = temp.empty() ? 0 : std::stoi(temp);
+
+        if (temp.find_first_not_of(" \t\r\n") == std::string::npos) {
+            a.elevation_ft = 0;
+        }
+        else {
+            try {
+                a.elevation_ft = std::stoi(temp);
+            }
+            catch (...) {
+                a.elevation_ft = 0;
+            }
+        }
+
 
         std::getline(ss, a.continent, ',');
         std::getline(ss, a.iso_country, ',');
@@ -38,8 +50,12 @@ std::vector<Airport> loadAirports(const std::string& filename) {
         std::getline(ss, a.gps_code, ',');
         std::getline(ss, a.local_code, ',');
 
+
         
         std::getline(ss, temp, ',');  // temp = "52.123, -1.234"
+
+        std::getline(ss, temp, ',');
+
 
         size_t commaPos = temp.find(',');
         if (commaPos != std::string::npos) {
