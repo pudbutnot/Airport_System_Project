@@ -7,3 +7,12 @@
 std::vector <Airport> loadAirports(const std::string& filename);
 
 #endif
+
+#include <vector>
+#include <string>
+#include "Airport.h"
+
+std::vector<Airport> loadAirports(const std::string& filename);
+
+#endif
+
