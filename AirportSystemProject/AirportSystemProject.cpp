@@ -5,26 +5,37 @@
 #include <string>
 #include "Airport.h"
 #include "DataLoader.h"
+#include "SearchManager.h"
 
 using namespace std;
 
 int main()
 {
-    std::vector <Airport> airports = loadAirports("airports.csv");
-    std::string code;
-    std::cout << "Enter country code to search: ";
-    std::cin >> code;
-    std::vector <Airport> results = searchByCountry(airports, code);
+    vector<Airport> airports = loadAirports("airports.csv");
 
-    std::cout << "Found:  " << results.size() << "airports.\n";
+    string code;
+    cout << "Enter country code to search: ";
+    cin >> code;
 
-    for (const auto& a : results) {
-        std::cout << a.name << " (" << a.iata_code << ") - " << a.municipality << "\n";
-    }
-    return 0;
-}
+    vector<Airport> resultsCountry = searchByCountry(airports, code);
+    cout << "Found " << resultsCountry.size() << " airports.\n";
 
-    std::cout << "Program started successfully.\n";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    string partial;
+    cout << "\nEnter partial name: ";
+    getline(cin, partial);
+
+    vector<Airport> resultsName = searchByPartialName(airports, partial);
+    cout << "Partial name matches: " << resultsName.size() << "\n";
+
+    string iata;
+    cout << "\nEnter IATA code:\n> ";
+    getline(cin, iata);
+
+    vector<Airport> resultsIATA = searchByIATA(airports, iata);
+    cout << "\nIATA matches: " << resultsIATA.size() << "\n";
+
     return 0;
 }
 
