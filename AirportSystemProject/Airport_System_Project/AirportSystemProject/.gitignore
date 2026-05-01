@@ -1,0 +1,18 @@
+# Ignore everything
+*
+
+# Allow folders (required so Git can see files inside them)
+!*/
+
+# Allow C++ source files
+!*.cpp
+!*.h
+
+# Allow .gitignore itself
+!.gitignore
+
+# Allow Visual Studio project files
+!*.sln
+!*.vcxproj
+!*.filters
+
