@@ -34,9 +34,13 @@ std::vector<Airport> loadAirports(const std::string& filename) {
         std::getline(ss, a.gps_code, ',');
         std::getline(ss, a.local_code, ',');
 
+        // -----------------------------
+        // FIXED COORDINATE PARSING
+        // -----------------------------
         std::string coord;
-        std::getline(ss, coord);
+        std::getline(ss, coord); // read the ENTIRE remaining field
 
+        // Remove spaces and quotes
         coord.erase(std::remove(coord.begin(), coord.end(), ' '), coord.end());
         coord.erase(std::remove(coord.begin(), coord.end(), '"'), coord.end());
 
@@ -49,15 +53,18 @@ std::vector<Airport> loadAirports(const std::string& filename) {
 
             try {
                 if (commaPos != std::string::npos) {
+                    // Two numbers
                     a.latitude = std::stod(coord.substr(0, commaPos));
                     a.longitude = std::stod(coord.substr(commaPos + 1));
                 }
                 else {
+                    // Only one number → treat as latitude
                     a.latitude = std::stod(coord);
                     a.longitude = 0;
                 }
             }
             catch (...) {
+                // stod failed → set safe defaults
                 a.latitude = 0;
                 a.longitude = 0;
             }
@@ -69,6 +76,7 @@ std::vector<Airport> loadAirports(const std::string& filename) {
     std::cout << "Loaded: " << airports.size() << " airports.\n";
     return airports;
 }
+
 void saveAirports(const std::string& filename, const std::vector<Airport>& airports) {
     std::ofstream file(filename);
 
@@ -78,7 +86,8 @@ void saveAirports(const std::string& filename, const std::vector<Airport>& airpo
     }
 
     // Write header
-    file << "ident,type,name,elevation_ft,continent,iso_country,iso_region,municipality,icao_code,iata_code,gps_code,local_code,coordinates\n";
+    file << "ident,type,name,elevation_ft,continent,iso_country,iso_region,municipality,"
+        "icao_code,iata_code,gps_code,local_code,coordinates\n";
 
     for (const auto& a : airports) {
         file << a.ident << ","
@@ -100,3 +109,6 @@ void saveAirports(const std::string& filename, const std::vector<Airport>& airpo
     std::cout << "Airports saved successfully.\n";
 }
 
+void addAirport(std::vector<Airport>& airports, const Airport& a) {
+    airports.push_back(a);
+}

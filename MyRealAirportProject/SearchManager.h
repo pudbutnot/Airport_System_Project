@@ -6,10 +6,13 @@
 #include <string>
 #include "Airport.h"
 
-std::vector<Airport> searchByCountry(const std::vector<Airport>& airports, const std::string& countryCode);
-std::vector<Airport> searchByPartialName(const std::vector<Airport>& airports, const std::string& partialName);
-std::vector<Airport> searchByIATA(const std::vector<Airport>& airports, const std::string& iataCode);
+// Search airports by ISO country code
+std::vector<Airport> searchByCountry(const std::vector<Airport>& airports, const std::string& country);
 
-void addAirport(std::vector<Airport>& airports, const Airport& a);
+// Search airports by partial name (case-insensitive)
+std::vector<Airport> searchByPartialName(const std::vector<Airport>& airports, const std::string& partial);
+
+// Search airports by IATA code
+std::vector<Airport> searchByIATA(const std::vector<Airport>& airports, const std::string& iata);
 
 #endif

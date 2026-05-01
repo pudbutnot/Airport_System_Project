@@ -1,20 +1,159 @@
-// MyRealAirportProject.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include <limits>
+#include "Airport.h"
+#include "DataLoader.h"
+#include "SearchManager.h"
 
-int main()
-{
-    std::cout << "Hello World!\n";
+using namespace std;
+
+Airport createAirportFromInput() {
+    Airport a;
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    cout << "\n=== Add New Airport ===\n";
+
+    cout << "Ident: ";
+    getline(cin, a.ident);
+
+    cout << "Type: ";
+    getline(cin, a.type);
+
+    cout << "Name: ";
+    getline(cin, a.name);
+
+    cout << "Elevation (ft): ";
+    getline(cin, a.elevation_ft);
+
+    cout << "Continent: ";
+    getline(cin, a.continent);
+
+    cout << "ISO Country: ";
+    getline(cin, a.iso_country);
+
+    cout << "ISO Region: ";
+    getline(cin, a.iso_region);
+
+    cout << "Municipality: ";
+    getline(cin, a.municipality);
+
+    cout << "ICAO Code: ";
+    getline(cin, a.icao_code);
+
+    cout << "IATA Code: ";
+    getline(cin, a.iata_code);
+
+    cout << "GPS Code: ";
+    getline(cin, a.gps_code);
+
+    cout << "Local Code: ";
+    getline(cin, a.local_code);
+
+    cout << "Latitude: ";
+    cin >> a.latitude;
+
+    cout << "Longitude: ";
+    cin >> a.longitude;
+
+    return a;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+void printAirport(const Airport& a) {
+    cout << "-----------------------------\n";
+    cout << "Name: " << a.name << "\n";
+    cout << "IATA: " << a.iata_code << "\n";
+    cout << "ICAO: " << a.icao_code << "\n";
+    cout << "Type: " << a.type << "\n";
+    cout << "Country: " << a.iso_country << "\n";
+    cout << "Region: " << a.iso_region << "\n";
+    cout << "Municipality: " << a.municipality << "\n";
+    cout << "Elevation (ft): " << a.elevation_ft << "\n";
+    cout << "Latitude: " << a.latitude << "\n";
+    cout << "Longitude: " << a.longitude << "\n";
+}
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+int main() {
+    vector<Airport> airports = loadAirports("airports.csv");
+
+    int choice;
+
+    while (true) {
+        cout << "\n----- Airport System -----\n";
+        cout << "1. Search by Country\n";
+        cout << "2. Search by Partial Name\n";
+        cout << "3. Search by IATA\n";
+        cout << "4. Add New Airport\n";
+        cout << "5. Save\n";
+        cout << "Please choose a number: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            string code;
+            cout << "Enter country code: ";
+            cin >> code;
+
+            auto results = searchByCountry(airports, code);
+            cout << "Found " << results.size() << " airports.\n";
+
+            for (const auto& a : results)
+                printAirport(a);
+        }
+        else if (choice == 2) {
+            cin.ignore();
+            string partial;
+            cout << "Enter partial name: ";
+            getline(cin, partial);
+
+            auto results = searchByPartialName(airports, partial);
+            cout << "Found " << results.size() << " airports.\n";
+
+            for (const auto& a : results)
+                printAirport(a);
+        }
+        else if (choice == 3) {
+            cin.ignore();
+            string iata;
+            cout << "Enter IATA code: ";
+            getline(cin, iata);
+
+            auto results = searchByIATA(airports, iata);
+            cout << "Found " << results.size() << " airports.\n";
+
+            for (const auto& a : results)
+                printAirport(a);
+        }
+        else if (choice == 4) {
+            Airport newAirport = createAirportFromInput();
+            addAirport(airports, newAirport);
+
+            cout << "\nAirport has been added.\n";
+
+            char again;
+            cout << "Would you like to return to the menu? (y/n): ";
+            cin >> again;
+
+            if (again == 'n' || again == 'N') {
+                cout << "Ok!Goodbye, see you soon!\n";
+                return 0;
+            }
+        }
+
+        else if (choice == 5) {
+            saveAirports("airports.csv", airports);
+
+            cout << "\nAirports saved successfully.\n";
+
+            char again;
+            cout << "Would you like to return to the menu? (y/n): ";
+            cin >> again;
+
+            if (again == 'n' || again == 'N') {
+                cout << "Ok!Goodbye, see you soon!\n";
+                return 0;
+            }
+        }
+
+    }
+
+    return 0;
+}

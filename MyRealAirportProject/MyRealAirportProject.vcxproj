@@ -127,7 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DataLoader.cpp" />
     <ClCompile Include="MyRealAirportProject.cpp" />
+    <ClCompile Include="SearchManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Airport.h" />
+    <ClInclude Include="DataLoader.h" />
+    <ClInclude Include="SearchManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
